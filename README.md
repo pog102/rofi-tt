@@ -29,11 +29,6 @@ Make sure you have the following prerequisites installed on your system:
      ```bash
      sudo make install
      ```
-4. Reload the udev rules:
-
-   ```bash
-   sudo udevadm control --reload-rules
-   ```
 ### AUR
 
 ```bash
