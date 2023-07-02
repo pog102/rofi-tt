@@ -13,12 +13,14 @@ URLS=($(echo "$RSS_FEED" | grep "<enclosure" | sed -e 's/.*url="//g' -e 's/".*//
 # Print the titles and URLs in a TUI using whiptail
 # CHOICE=$(whiptail --title "Podcast TUI" --menu "Choose an episode:" 15 50 5 "${TITLES[@]}" 3>&1 1>&2 2>&3)
 # echo -e "${TITLES}"
-CHOICE=$(echo -e "${TITLES}" | rofi -theme /usr/local/share/rofi/themes/trashtaste.rasi -dmenu -i -p "Choose an episode:")
+CHOICE=$(echo -e "${TITLES}\nexit" | rofi -theme /usr/local/share/rofi/themes/trashtaste.rasi -dmenu -i -p "Choose an episode:")
 
 # Open the URL of the chosen episode in the default web browser
 if [ $? -eq 0 ]; then
+  [ "$CHOICE" == "exit" ] && killall mpv && exit
     INDEX=$(echo -e "${TITLES}" | grep -n "$CHOICE" |cut -d : -f 1)
     URL=${URLS[$INDEX-1]}
+    killall mpv
     mpv --save-position-on-quit -no-video "$URL"
 fi
 
