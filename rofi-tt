@@ -20,7 +20,7 @@ if [ $? -eq 0 ]; then
   [ "$CHOICE" == "exit" ] && killall mpv && exit
     INDEX=$(echo -e "${TITLES}" | grep -n "$CHOICE" |cut -d : -f 1)
     URL=${URLS[$INDEX-1]}
-    killall mpv >/dev/null
+    pgrep mpv >/dev/null && killall mpv
     mpv --save-position-on-quit -no-video "$URL"
 fi
 
