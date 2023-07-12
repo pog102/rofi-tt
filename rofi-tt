@@ -15,11 +15,10 @@ CHOICE=$(echo -e "${TITLES}\nexit" | rofi -theme /usr/local/share/rofi/themes/tr
 
 # Open the URL of the chosen episode in the default web browser
 if [ $? -eq 0 ]; then
-  [ "$CHOICE" == "exit" ] && killall rofi-tt
+  [ "$CHOICE" == "exit" ] && pkill mpv
     INDEX=$(echo -e "${TITLES}" | grep -n "$CHOICE" |cut -d : -f 1)
     URL=${URLS[$INDEX-1]}
-    # killall mpv
-    pgrep rofi-tt >/dev/null && pkill mpv
+    pgrep mpv >/dev/null && pkill mpv
     mpv  --save-position-on-quit -no-video "$URL"
 fi
 
