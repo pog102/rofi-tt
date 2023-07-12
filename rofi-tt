@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+
 # Set the URL of your RSS feed
 RSS_FEED_URL='https://feeds.megaphone.fm/trashtaste'
 
@@ -14,11 +15,13 @@ CHOICE=$(echo -e "${TITLES}\nexit" | rofi -theme /usr/local/share/rofi/themes/tr
 
 # Open the URL of the chosen episode in the default web browser
 if [ $? -eq 0 ]; then
-  [ "$CHOICE" == "exit" ] && killall mpv && exit
+  [ "$CHOICE" == "exit" ] && killall rofi-tt
     INDEX=$(echo -e "${TITLES}" | grep -n "$CHOICE" |cut -d : -f 1)
     URL=${URLS[$INDEX-1]}
-    pgrep mpv >/dev/null && killall mpv
-    mpv --save-position-on-quit -no-video "$URL"
+    # killall mpv
+    pgrep rofi-tt >/dev/null && pkill mpv
+    mpv  --save-position-on-quit -no-video "$URL"
+    pkill rofi-tt
 fi
 
 
