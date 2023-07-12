@@ -21,7 +21,6 @@ if [ $? -eq 0 ]; then
     # killall mpv
     pgrep rofi-tt >/dev/null && pkill mpv
     mpv  --save-position-on-quit -no-video "$URL"
-    pkill rofi-tt
 fi
 
 
